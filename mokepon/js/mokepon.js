@@ -11,8 +11,8 @@ function iniciarJuego(){
     let sectionSeleccionarAtaque = document.getElementById('selecc-ataque')
     sectionSeleccionarAtaque.style.display='none'
 
-    let btnMascota = document.getElementById('btn-mascota')
-    btnMascota.addEventListener('click', seleccMascota)
+    let btndragon = document.getElementById('btn-dragon')
+    btndragon.addEventListener('click', seleccdragon)
     
     let btnFuego=document.getElementById('btn-fuego')
     btnFuego.addEventListener('click',ataqueFuego)
@@ -24,48 +24,56 @@ function iniciarJuego(){
     let btnReiniciar = document.getElementById('btn-reiniciar')
     btnReiniciar.addEventListener('click',reiniciarJuego)
 }
-function seleccMascota(){
+function seleccdragon(){
     
     let sectionSeleccionarAtaque = document.getElementById('selecc-ataque')
-    sectionSeleccionarAtaque.style.display='block'
-    let sectionSeleccionarMascota = document.getElementById('selecc-mascota')
-    sectionSeleccionarMascota.style.display='none'
-    let hipodoge = document.getElementById('hipodoge')
-    let capipepo = document.getElementById('capipepo')
+    sectionSeleccionarAtaque.style.display='flex'
+    let sectionSeleccionardragon = document.getElementById('selecc-dragon')
+    sectionSeleccionardragon.style.display='none'
+    let chimuelo = document.getElementById('chimuelo')
+    let rompecraneos = document.getElementById('rompecraneos')
     let ratigueya = document.getElementById('ratigueya')
-    let spanMascotaJugador = document.getElementById('mascota-jugador')
+    let spandragonJugador = document.getElementById('dragon-jugador')
+    let imgDragonJugador = document.getElementById('img-dragon-jugador')
 
-    if(hipodoge.checked){
-        alert('Seleccionaste a HIPODOGE')
-        spanMascotaJugador.innerHTML = 'HIPODOGE'
-    }else if(capipepo.checked){
-        alert('Seleccionaste a CAPIPEPO')
-        spanMascotaJugador.innerHTML = 'CAPIPEPO'
+    if(chimuelo.checked){
+        alert('Seleccionaste a CHIMUELO')
+        spandragonJugador.innerHTML = 'CHIMUELO'
+        imgDragonJugador.innerHTML = '<img src="./img/chimuelo.png" />'
+    }else if(rompecraneos.checked){
+        alert('Seleccionaste a ROMPECRÁNEOS')
+        spandragonJugador.innerHTML = 'ROMPECRÁNEOS'
+        imgDragonJugador.innerHTML = '<img src="./img/Vanidoso.png" />'
     }else if(ratigueya.checked){
         alert('Seleccionaste a RATIGUEYA')
-        spanMascotaJugador.innerHTML = 'RATIGUEYA'
+        spandragonJugador.innerHTML = 'RATIGUEYA'
+        imgDragonJugador.innerHTML = '<img src="./img/ratigueya.png" />'
     }else{
-        alert('Selecciona una mascota para iniciar el juego')
+        alert('Selecciona una dragon para iniciar el juego')
         reiniciarJuego()
     }
 
-    seleccMascotaEnemigo()
+    seleccdragonEnemigo()
 }
 
 function aleatorio(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-function seleccMascotaEnemigo(){
-    let mascotaEnemigoAleatorio = aleatorio(1,3)
-    let spanMascotaEnemigo = document.getElementById('mascota-enemigo')
+function seleccdragonEnemigo(){
+    let dragonEnemigoAleatorio = aleatorio(1,3)
+    let spandragonEnemigo = document.getElementById('dragon-enemigo')
+    let imgDragonEnemigo = document.getElementById('img-dragon-enemigo')
 
-    if(mascotaEnemigoAleatorio==1){
-        spanMascotaEnemigo.innerHTML = 'HIPODOGE'
-    }else if(mascotaEnemigoAleatorio == 2){
-        spanMascotaEnemigo.innerHTML = 'CAPIPEPO'
-    }else if(mascotaEnemigoAleatorio == 3){
-        spanMascotaEnemigo.innerHTML = 'RATIGUEYA'
+    if(dragonEnemigoAleatorio==1){
+        spandragonEnemigo.innerHTML = 'CHIMUELO'
+        imgDragonEnemigo.innerHTML = '<img src="./img/chimuelo.png" />'
+    }else if(dragonEnemigoAleatorio == 2){
+        spandragonEnemigo.innerHTML = 'ROMPECRÁNEOS'
+        imgDragonEnemigo.innerHTML = '<img src="./img/Vanidoso.png" />'
+    }else if(dragonEnemigoAleatorio == 3){
+        spandragonEnemigo.innerHTML = 'RATIGUEYA'
+        imgDragonEnemigo.innerHTML = '<img src="./img/ratigueya.png" />'
     }
 }
 
@@ -97,10 +105,19 @@ function ataqueAleatorioEnemigo(){
 }
 
 function crearMensaje(){
-    let sectionMensajes = document.getElementById('mensajes')
-    let parrafo = document.createElement('p')
-    parrafo.innerHTML ='Tu mascota atacó con '+ataqueJugador+ ', la mascota del enemigo atacó con '+ataqueEnemigo+' => '+resultado
-    sectionMensajes.appendChild(parrafo)
+    let sectionMensajes = document.getElementById('resultado')
+    let ataquesJugador = document.getElementById('ataques-jugador')
+    let ataquesEnemigo = document.getElementById('ataques-enemigo')
+    let nuevoAtaqueJugador = document.createElement('p')
+    let nuevoAtaqueEnemigo = document.createElement('p')
+
+    sectionMensajes.innerHTML = resultado
+    nuevoAtaqueJugador.innerHTML = ataqueJugador
+    nuevoAtaqueEnemigo.innerHTML = ataqueEnemigo
+
+    ataquesJugador.appendChild(nuevoAtaqueJugador)
+    ataquesEnemigo.appendChild(nuevoAtaqueEnemigo)
+    
 }
 
 function combate(){
@@ -140,10 +157,8 @@ function revisarVidas(){
 function crearMensajeFinal(resultadoFinal){
     let sectionreiniciarJuego = document.getElementById('reiniciar')
     sectionreiniciarJuego.style.display='block'
-    let sectionMensajes = document.getElementById('mensajes')
-    let parrafo = document.createElement('p')
-    parrafo.innerHTML = resultadoFinal
-    sectionMensajes.appendChild(parrafo)
+    let sectionMensajes = document.getElementById('resultado')
+    sectionMensajes.innerHTML = resultadoFinal
 
     let btnFuego=document.getElementById('btn-fuego')
     btnFuego.disabled = true
