@@ -14,13 +14,7 @@
         <h1 class="titulo">🔥  D R A G O N ' S  🔥</h1>
 
         <h2 class="subtitulo">Elige a tu dragón:</h2>
-        <div class="tarjetas">
-            <input type="radio" name="dragon"  id="chimuelo">
-            <label for="chimuelo" class="tarjeta-dragon"><p>Chimuelo</p> <img src="./img/chimuelo.png" alt=""></label>
-            <input type="radio" name="dragon" id="rompecraneos">
-            <label for="rompecraneos" class="tarjeta-dragon"><p>Rompecráneos</p><img src="./img/Vanidoso.png" alt=""></label>
-            <input type="radio" name="dragon" id="ratigueya">
-            <label for="ratigueya" class="tarjeta-dragon"><p>Ratigueya</p><img src="./img/ratigueya.png" alt=""></label>
+        <div class="tarjetas" id="contenedor-tarjetas">
             
             <!--<label for="langostelvis">Langostelvis</label>
             <input type="radio" name="dragon" id="langostelvis">
@@ -39,10 +33,8 @@
 
         <h2 class="subtitulo">Elige tu ataque:</h2>
 
-        <div class="tarjetas-ataques">
-            <button id="btn-fuego" class="ataques">    🔥Fuego       </button>
-            <button id="btn-agua" class="ataques">   💦Agua      </button>
-            <button id="btn-tierra" class="ataques">    🏔️Tierra        </button>
+        <div id="contenedor-ataques" class="tarjetas-ataques">
+            
         </div>
 
         <div>
@@ -59,14 +51,14 @@
         <div  class="perfiles">
             <div class="mensaje-ataques-jugador">
                 <p>J U G A D O R</p>
-                <p id="vidas-jugador">3</p>
+                <p id="vidas-jugador">0</p>
                 <p id="dragon-jugador"></p>
                 <p id="img-dragon-jugador"></p>
                 <div id="ataques-jugador"></div>
             </div>
             <div class="mensaje-ataques-enemigo">
                 <p>E N E M I G O</p>
-                <p id="vidas-enemigo">3</p>
+                <p id="vidas-enemigo">0</p>
                 <p id="dragon-enemigo"></p>
                 <p id="img-dragon-enemigo"></p>
                 <div id="ataques-enemigo"></div>

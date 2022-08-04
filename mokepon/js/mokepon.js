@@ -1,59 +1,204 @@
+//VARIABLES PARA APLICAR DRY
+//iniciarJuego
+const sectionreiniciarJuego = document.getElementById('reiniciar')
+const btndragon = document.getElementById('btn-dragon')
+
+const btnReiniciar = document.getElementById('btn-reiniciar')
+const contenedorTarjetas=document.getElementById('contenedor-tarjetas')
+
+
+//seleccDragon
+const sectionSeleccionarAtaque = document.getElementById('selecc-ataque')
+const sectionSeleccionardragon = document.getElementById('selecc-dragon')
+const contenedorAtaques = document.getElementById('contenedor-ataques')
+
+//seleccDragonEnemigo
+const spandragonJugador = document.getElementById('dragon-jugador')
+const imgDragonJugador = document.getElementById('img-dragon-jugador')
+const spandragonEnemigo = document.getElementById('dragon-enemigo')
+const imgDragonEnemigo = document.getElementById('img-dragon-enemigo')
+//combate
+const spanVidasJugador = document.getElementById('vidas-jugador')
+const spanVidasEnemigo = document.getElementById('vidas-enemigo')
+
+//crearMensaje
+const sectionMensajes = document.getElementById('resultado')
+const ataquesJugador = document.getElementById('ataques-jugador')
+const ataquesEnemigo = document.getElementById('ataques-enemigo')
+
+//crearMensajeFinal (se repiten las variables)
+
 //Variables globales
-let ataqueJugador
-let ataqueEnemigo
+let ataqueJugador=[]
+let ataquesDragonEnemigo
+let ataqueEnemigo=[]
 let resultado
 let vidasJugador = 3
 let vidasEnemigo = 3
+let dragones = []
+let opcionDeDragones
+let idImgJugador
+let chimuelo 
+let rompecraneos 
+let ratigueya
+let opcionAtaque
+let btnFuego
+let btnAgua
+let btnTierra
+let botones = []
+
+//CLASES
+class Dragon{
+    constructor(nombre,img,vida){
+        this.nombre = nombre
+        this.img = img
+        this.vida = vida
+        this.ataques = []
+    }
+}
+//OBJETOS
+let objChimuelo= new Dragon('Chimuelo','./img/chimuelo.png',5)
+let objRompecraneos = new Dragon('Rompecraneos','./img/Vanidoso.png',5)
+let objRatigueya = new Dragon('Ratigueya', './img/ratigueya.png',5)
+
+//ARRAY DE OBJETOS
+
+objChimuelo.ataques.push(
+    {nombre:'💦', id:'btn-agua'},
+    {nombre:'💦',id:'btn-agua'},
+    {nombre:'💦',id:'btn-agua'},
+    {nombre:'🏔️',id:'btn-tierra'},
+    {nombre:'🔥',id:'btn-fuego'},
+
+)
+objRompecraneos.ataques.push(
+    {nombre:'🔥',id:'btn-fuego'},
+    {nombre:'🔥',id:'btn-fuego'},
+    {nombre:'🔥',id:'btn-fuego'},
+    {nombre:'💦', id:'btn-agua'},
+    {nombre:'🏔️',id:'btn-tierra'},
+
+)
+objRatigueya.ataques.push(
+    {nombre:'🏔️',id:'btn-tierra'},
+    {nombre:'🏔️',id:'btn-tierra'},
+    {nombre:'🏔️',id:'btn-tierra'},
+    {nombre:'💦', id:'btn-agua'},
+    {nombre:'🔥',id:'btn-fuego'},
+
+)
+
+dragones.push(objChimuelo,objRompecraneos,objRatigueya)
 
 function iniciarJuego(){
-    let sectionreiniciarJuego = document.getElementById('reiniciar')
+    
     sectionreiniciarJuego.style.display='none'
-    let sectionSeleccionarAtaque = document.getElementById('selecc-ataque')
     sectionSeleccionarAtaque.style.display='none'
 
-    let btndragon = document.getElementById('btn-dragon')
+    dragones.forEach((dragon)=>{
+        opcionDeDragones = `
+        <input type="radio" name="dragon"  id=${dragon.nombre}>
+            <label for=${dragon.nombre} class="tarjeta-dragon"><p>${dragon.nombre}</p> <img src=${dragon.img} alt=${dragon.nombre}></label>
+        `
+        contenedorTarjetas.innerHTML += opcionDeDragones
+
+        chimuelo = document.getElementById('Chimuelo')
+        rompecraneos = document.getElementById('Rompecraneos')
+        ratigueya = document.getElementById('Ratigueya')
+    })
+
     btndragon.addEventListener('click', seleccdragon)
     
-    let btnFuego=document.getElementById('btn-fuego')
-    btnFuego.addEventListener('click',ataqueFuego)
-    let btnAgua=document.getElementById('btn-agua')
-    btnAgua.addEventListener('click',ataqueAgua)
-    let btnTierra=document.getElementById('btn-tierra')
-    btnTierra.addEventListener('click',ataqueTierra)
-
-    let btnReiniciar = document.getElementById('btn-reiniciar')
     btnReiniciar.addEventListener('click',reiniciarJuego)
 }
 function seleccdragon(){
     
-    let sectionSeleccionarAtaque = document.getElementById('selecc-ataque')
     sectionSeleccionarAtaque.style.display='flex'
-    let sectionSeleccionardragon = document.getElementById('selecc-dragon')
     sectionSeleccionardragon.style.display='none'
-    let chimuelo = document.getElementById('chimuelo')
-    let rompecraneos = document.getElementById('rompecraneos')
-    let ratigueya = document.getElementById('ratigueya')
-    let spandragonJugador = document.getElementById('dragon-jugador')
-    let imgDragonJugador = document.getElementById('img-dragon-jugador')
 
     if(chimuelo.checked){
-        alert('Seleccionaste a CHIMUELO')
-        spandragonJugador.innerHTML = 'CHIMUELO'
-        imgDragonJugador.innerHTML = '<img src="./img/chimuelo.png" />'
+        spandragonJugador.innerHTML = chimuelo.id
+        idImgJugador = chimuelo.id
+        muestraImgDragonJugador()
     }else if(rompecraneos.checked){
-        alert('Seleccionaste a ROMPECRÁNEOS')
-        spandragonJugador.innerHTML = 'ROMPECRÁNEOS'
-        imgDragonJugador.innerHTML = '<img src="./img/Vanidoso.png" />'
+        spandragonJugador.innerHTML = rompecraneos.id
+        idImgJugador = rompecraneos.id
+        muestraImgDragonJugador()
     }else if(ratigueya.checked){
-        alert('Seleccionaste a RATIGUEYA')
-        spandragonJugador.innerHTML = 'RATIGUEYA'
-        imgDragonJugador.innerHTML = '<img src="./img/ratigueya.png" />'
+        spandragonJugador.innerHTML = ratigueya.id
+        idImgJugador = ratigueya.id
+        muestraImgDragonJugador()
     }else{
         alert('Selecciona una dragon para iniciar el juego')
         reiniciarJuego()
     }
 
+    extraerAtaques(idImgJugador)
     seleccdragonEnemigo()
+}
+
+function extraerAtaques(idImgJugador){
+    let ataques
+    for (let i = 0; i < dragones.length; i++) {
+        if(idImgJugador==dragones[i].nombre){
+            ataques = dragones[i].ataques
+
+        }        
+    }
+    mostrarAtaques(ataques)
+}
+
+function mostrarAtaques(ataques){
+    ataques.forEach(ataque => {
+        opcionAtaque=`
+        <button id=${ataque.id} class="ataques BAtaque"> ${ataque.nombre} </button>
+        `
+        contenedorAtaques.innerHTML+=opcionAtaque
+    });
+    btnFuego=document.getElementById('btn-fuego')
+    btnAgua=document.getElementById('btn-agua')
+    btnTierra=document.getElementById('btn-tierra')
+
+    botones = document.querySelectorAll('.BAtaque')
+
+}
+
+function secuenciaAtaque(){
+    botones.forEach((boton)=>{
+        boton.addEventListener('click',(e)=>{
+            if(e.target.textContent === ' 🔥 '){
+                ataqueJugador.push('FUEGO')
+                console.log(ataqueJugador)
+                boton.style.background = 'rgb(158, 0, 0)'
+            }else if(e.target.textContent === ' 💦 '){
+                ataqueJugador.push('AGUA')
+                console.log(ataqueJugador)
+                boton.style.background = 'rgb(158, 0, 0)'
+            }else{
+                ataqueJugador.push('TIERRA')
+                console.log(ataqueJugador)
+                boton.style.background = 'rgb(158, 0, 0)'
+            }
+            ataqueAleatorioEnemigo()
+        })
+    })
+}
+
+function muestraImgDragonJugador(){
+    dragones.forEach((dragon)=>{
+        if(idImgJugador==dragon.nombre){
+            imgDragonJugador.innerHTML= `<img src="${dragon.img}" />`;
+        }
+    })
+
+}
+function muestraImgDragonEnemigo(){
+    dragones.forEach((dragon)=>{
+        if(idImgJugador==dragon.nombre){
+            imgDragonJugador.innerHTML= `<img src="${dragon.img}" />`
+        }
+    })
+
 }
 
 function aleatorio(min, max) {
@@ -61,53 +206,29 @@ function aleatorio(min, max) {
   }
 
 function seleccdragonEnemigo(){
-    let dragonEnemigoAleatorio = aleatorio(1,3)
-    let spandragonEnemigo = document.getElementById('dragon-enemigo')
-    let imgDragonEnemigo = document.getElementById('img-dragon-enemigo')
-
-    if(dragonEnemigoAleatorio==1){
-        spandragonEnemigo.innerHTML = 'CHIMUELO'
-        imgDragonEnemigo.innerHTML = '<img src="./img/chimuelo.png" />'
-    }else if(dragonEnemigoAleatorio == 2){
-        spandragonEnemigo.innerHTML = 'ROMPECRÁNEOS'
-        imgDragonEnemigo.innerHTML = '<img src="./img/Vanidoso.png" />'
-    }else if(dragonEnemigoAleatorio == 3){
-        spandragonEnemigo.innerHTML = 'RATIGUEYA'
-        imgDragonEnemigo.innerHTML = '<img src="./img/ratigueya.png" />'
-    }
+    let dragonEnemigoAleatorio = aleatorio(0,dragones.length-1)
+    spandragonEnemigo.innerHTML= dragones[dragonEnemigoAleatorio].nombre
+    imgDragonEnemigo.innerHTML= `<img src="${dragones[dragonEnemigoAleatorio].img}" />`
+    ataquesDragonEnemigo =dragones[dragonEnemigoAleatorio].ataques
+    secuenciaAtaque()
 }
 
-function ataqueFuego(){
-    ataqueJugador='FUEGO'
-    ataqueAleatorioEnemigo()
-}
-function ataqueAgua(){
-    ataqueJugador='AGUA'
-    ataqueAleatorioEnemigo()
-
-}
-function ataqueTierra(){
-    ataqueJugador='TIERRA'
-    ataqueAleatorioEnemigo()
-
-}
 
 function ataqueAleatorioEnemigo(){
-    let ataqueAleatorio = aleatorio(1,3)
-    if(ataqueAleatorio==1){
-        ataqueEnemigo = 'FUEGO'
-    }else if(ataqueAleatorio==2){
-        ataqueEnemigo = 'AGUA'
+    let ataqueAleatorio = aleatorio(0,ataquesDragonEnemigo.length - 1)
+    if(ataqueAleatorio==0 || ataqueAleatorio==1){
+        ataqueEnemigo.push('FUEGO')
+    }else if(ataqueAleatorio==2 || ataqueAleatorio==3){
+        ataqueEnemigo.push('AGUA')
     }else{
-        ataqueEnemigo = 'TIERRA'
+        ataqueEnemigo.push('TIERRA')
     }
+    console.log(ataqueEnemigo)
     combate()
 }
 
 function crearMensaje(){
-    let sectionMensajes = document.getElementById('resultado')
-    let ataquesJugador = document.getElementById('ataques-jugador')
-    let ataquesEnemigo = document.getElementById('ataques-enemigo')
+    
     let nuevoAtaqueJugador = document.createElement('p')
     let nuevoAtaqueEnemigo = document.createElement('p')
 
@@ -121,9 +242,7 @@ function crearMensaje(){
 }
 
 function combate(){
-    let spanVidasJugador = document.getElementById('vidas-jugador')
-    let spanVidasEnemigo = document.getElementById('vidas-enemigo')
-
+    
     if (ataqueEnemigo == ataqueJugador) {
         resultado='EMPATE'
     } else if (
@@ -155,16 +274,11 @@ function revisarVidas(){
 }
 
 function crearMensajeFinal(resultadoFinal){
-    let sectionreiniciarJuego = document.getElementById('reiniciar')
     sectionreiniciarJuego.style.display='block'
-    let sectionMensajes = document.getElementById('resultado')
     sectionMensajes.innerHTML = resultadoFinal
 
-    let btnFuego=document.getElementById('btn-fuego')
     btnFuego.disabled = true
-    let btnAgua=document.getElementById('btn-agua')
     btnAgua.disabled = true
-    let btnTierra=document.getElementById('btn-tierra')
     btnTierra.disabled = true
 }
 
