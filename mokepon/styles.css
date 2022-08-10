@@ -126,9 +126,44 @@ input:checked + label{
     height: 100px;
     margin: 0;
 }
-@media (max-width: 360px) {
+
+/*CANVAS CAPITULO 60*/
+#ver-mapa{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#mapa{
+    border: 2px solid white;
+}
+
+#ver-mapa button{
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+    text-align: center;
+    font-size: 25px;
+    color: white;
+    background: rgba(255, 255, 255, 0.258);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.mover-botones{
+    display: flex;
+
+}
+@media (max-width: 560px) {
     .tarjetas,.tarjetas-ataques{
        flex-direction: column; 
        align-items: center;
+    }
+}
+@media (max-width: 300px) {
+    #ver-mapa{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
     }
 }

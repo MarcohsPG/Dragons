@@ -27,9 +27,21 @@
         
         <button id="btn-dragon">J u g a r</button>
     </section>
-    
-    
+    <section id="ver-mapa">
+        <h2 class="titulo-canvas">Recorre el mapa con tu dragon</h2>
+        <canvas id="mapa"></canvas>
+        <button onmouseup="detenerMovimiento()" onmousedown="moverArriba()">🔼</button>
 
+        <div class="mover-botones">
+            <button onmouseup="detenerMovimiento()" onmousedown="moverIzquierda()">◀️</button>
+            <button onmouseup="detenerMovimiento()" onmousedown="moverAbajo()">🔽</button>
+            <button onmouseup="detenerMovimiento()" onmousedown="moverDerecha()">▶️</button>
+
+        </div>
+        
+
+    </section>
+    
     <section id="selecc-ataque">
         <h1 class="titulo">🔥  D R A G O N ' S  🔥</h1>
 
