@@ -61,6 +61,7 @@ let mapabackground= new Image()
 mapabackground.src='/mokepon/img/pueblo.jpg'
 let dragonJugadorObj
 let jugadorId = null
+let enemigoId = null
 let alturaQueBuscamos
 let anchoDelMapa = window.innerWidth -300
 let anchoMaximoMapa=350
@@ -265,9 +266,40 @@ function secuenciaAtaque(){
                 boton.style.background = 'rgb(158, 0, 0)'
                 boton.disabled = true
             }
-            ataqueAleatorioEnemigo()
+            if(ataqueJugador.length === 5){
+                enviarAtaques()
+            }
         })
     })
+}
+
+function enviarAtaques(){
+    fetch(`http://localhost:8080/dragon/${jugadorId}/ataques`,{
+        method: "post",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            ataques: ataqueJugador
+        })
+    })
+
+    intervalo = setInterval(obtenerAtaquesEnemigo, 50)
+}
+
+function obtenerAtaquesEnemigo(){
+    fetch(`http://localhost:8080/dragon/${enemigoId}/ataques`)
+        .then(function(res){
+            if(res.ok){
+                res.json()
+                    .then(function({ataques}){
+                        if(ataques.length === 5){
+                            ataqueEnemigo = ataques
+                            combate()
+                        }
+                    })
+            }
+        })
 }
 
 function muestraImgDragonJugador(){
@@ -338,7 +370,7 @@ function indexAmbosOponente(jugador,enemigo){
 }
 
 function combate(){
-    
+    clearInterval(intervalo)
     for (let i = 0; i < ataqueJugador.length; i++) {
         if(ataqueJugador[i]===ataqueEnemigo[i]){
             indexAmbosOponente(i,i)
@@ -429,11 +461,11 @@ function enviarPosicion(x,y){
                         let dragonEnemigo = null
                         const dragonNombre  = enemigo.dragon.nombre || ""
                         if(dragonNombre === "Chimuelo"){
-                            dragonEnemigo= new Dragon('Chimuelo','./img/chimuelo.png',5,'/mokepon/img/chimueloMapa.png')
+                            dragonEnemigo= new Dragon('Chimuelo','./img/chimuelo.png',5,'/mokepon/img/chimueloMapa.png', enemigo.id)
                         }else if (dragonNombre === "Rompecraneos"){
-                            dragonEnemigo = new Dragon('Rompecraneos','./img/Vanidoso.png',5,'/mokepon/img/Rompecraneos.png')
+                            dragonEnemigo = new Dragon('Rompecraneos','./img/Vanidoso.png',5,'/mokepon/img/Rompecraneos.png', enemigo.id)
                         }else if(dragonNombre === "Ratigueya"){
-                            dragonEnemigo = new Dragon('Ratigueya', './img/ratigueya.png',5,'/mokepon/img/ratigueyaMapa.png')
+                            dragonEnemigo = new Dragon('Ratigueya', './img/ratigueya.png',5,'/mokepon/img/ratigueyaMapa.png', enemigo.id)
                         }
 
                         dragonEnemigo.x = enemigo.x
@@ -521,6 +553,7 @@ function revisarColision(enemigo){
     }
     detenerMovimiento()
     clearInterval(intervalo )
+    enemigoId = enemigo.id
     sectionSeleccionarAtaque.style.display='flex'
     sectionVerMapa.style.display='none'
     //alert("Hay colisión " + enemigo.nombre)
