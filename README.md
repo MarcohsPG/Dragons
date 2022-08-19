@@ -1,4 +1,4 @@
-#DRAGON'S
+# DRAGON'S
 Juego creado para aplicar los conocimientos obtenidos en el curso de programación basica.
 Algunos de los personajes creados son referencia a una pelicula de dragones conocida. Solo se tomaron como referencia y en ningun caso se pretende comercializar sin tener alguna licencia.
 
@@ -9,12 +9,12 @@ Algunos de los personajes creados son referencia a una pelicula de dragones cono
 - Para ejecutar el videojuego basta con poner en función el servidor ejecutndo el archivo "index.js" y  a su vez abrir el archivo "dragons.html" en el navegador.  
 - Compatible con dispositivos de escritorio, tabletas y celulares.
 
-###Tecnologias utilizada
+### Tecnologias utilizada
 - HTML
-
 - CSS
-- 
 - JAVASCRIPT
-
 - NODEJS
 
+# Mejoras
+- Crear mas personajes
+- Actualizar el servidor para que funcione desde cualquier lugar
